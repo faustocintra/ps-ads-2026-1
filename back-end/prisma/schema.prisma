@@ -12,3 +12,24 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+/*
+  O nome de u model no Prisma:
+  -Deve iniciar com letra maiúscula
+  -Deve estar no singular
+*/
+
+model Customer {
+  id Int                        @id   @default(autoincrement())
+  name              String
+  ident_document    String
+  birth_date        DateTime?
+  street_name       String
+  house_number      String
+  complements       String?
+  distric           String
+  municipality      String
+  state             String
+  phone             String
+  email             String
+}
