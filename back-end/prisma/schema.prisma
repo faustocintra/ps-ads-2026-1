@@ -10,8 +10,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+ provider = "postgresql"
+ url = env("DATABASE_URL")
 }
+
 
 /*
  O nome de um model no Prisma:
