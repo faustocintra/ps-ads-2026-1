@@ -11,6 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url = env("DATABASE_URL")
 }
 
 /*
@@ -27,7 +28,7 @@ model Customer {
   street_name       String
   house_number      String
   complements       String?
-  distric           String
+  district           String
   municipality      String
   state             String
   phone             String
