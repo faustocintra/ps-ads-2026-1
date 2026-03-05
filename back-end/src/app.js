@@ -17,11 +17,9 @@ app.use('/users', usersRouter)
 
 /**************** ROTAS *******************/
 
-// Middleware de verificação de autorização
-import authMiddleware from './middleware/auth.js'
-app.use(authMiddleware)
-
 import customersRoute from './routes/customers.js'
 app.use('/customers', customersRoute)
+/*quando o endereço pedir '/customers' a requisição vai para o
+customersRoute e vai executar o que está nesse arquivo*/
 
 export default app
