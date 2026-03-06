@@ -1,4 +1,4 @@
-import prisma from '../database/client.js'
+import { prisma } from '../database/client.js'
 
 const controller = {}
 
@@ -28,6 +28,29 @@ controller.create = async function (req, res){
         // HTTP 500: Internal Server Error
         res.status(500).end()
     }
+}
+
+controller.retrieveAll = async function (req, res) {
+    try{
+        
+        const result = await prisma.customer.findMany({
+            orderBy: [ {name: 'asc'} ]
+        })
+
+        // HTTP 200: 0k (implícito)
+        res.send(result)
+    }
+
+    catch(error){
+        // Se algo de errado ocorrer, cairemos aqui
+        console.log(error) // Exibe o erro no terminal
+
+        // Enviamos como resposta o código HTTP relativo
+        // a erro interno do servidor
+        // HTTP 500: Internal Server Error
+        res.status(500).end()
+    }
+    
 }
 
 export default controller
