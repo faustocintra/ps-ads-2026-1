@@ -53,4 +53,86 @@ controller.retrieveAll = async function (req, res) {
     
 }
 
+controller.retrieveOne = async function (req, res){
+    try{
+
+        const result = await prisma.customer.findUnique({
+            where: { id: Number(req.params.id) }
+        })
+
+        // HTTP 200: 0k (implícito)
+        if (result) res.send(result)
+        // HTTP 404: Not Found (não encontrado)
+        else res.status(404).send()
+    }
+    catch(error){
+        // Se algo de errado ocorrer, cairemos aqui
+        console.log(error) // Exibe o erro no terminal
+
+        // Enviamos como resposta o código HTTP relativo
+        // a erro interno do servidor
+        // HTTP 500: Internal Server Error
+        res.status(500).end()
+    }
+}
+
+controller.update = async function (req, res){
+
+    try{
+        const result = await prisma.customer.update({
+            where: { id: Number(req.params.id) },
+            data: req.body
+        })
+
+        // HTTP 204: No Content 
+        res.status(204).end()
+    }
+    catch(error){
+
+        console.log(error)
+
+        // No caso da biblioteca Prisma, é gerado um erro com
+        // código 'P2025' caso o registro com o id especificado
+        // não exista. Aqui, estamos detectando se é o caso e
+        // retornando HTTP 404: Not Found para indicar essa
+        // situação
+        if(error?.code === 'P2025') res.status(404).end()
+
+
+        // Se o erro for de outro tipo, retornamos o código de erro
+        // padrão
+        // HTTP 500: Internal Server Error
+        else res.status(500).end()
+    }
+}
+
+controller.delete = async function (req, res){
+
+    try{
+        const result = await prisma.customer.delete({
+            where: {id: Number(req.params.id)}
+        })
+
+        res.status(204).end()
+    }
+    
+    catch(error){
+
+        console.log(error)
+
+        // No caso da biblioteca Prisma, é gerado um erro com
+        // código 'P2025' caso o registro com o id especificado
+        // não exista. Aqui, estamos detectando se é o caso e
+        // retornando HTTP 404: Not Found para indicar essa
+        // situação
+        if(error?.code === 'P2025') res.status(404).end()
+
+
+        // Se o erro for de outro tipo, retornamos o código de erro
+        // padrão
+        // HTTP 500: Internal Server Error
+        else res.status(500).end()
+    }
+}
+
 export default controller
