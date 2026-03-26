@@ -4,10 +4,17 @@ import logger from 'morgan'
 
 
 import indexRouter from './routes/index.js'
-import usersRouter from './routes/users.js'
 
 
 const app = express()
+
+import cors from 'cors'
+
+
+app.use(cors({
+ origin: process.env.ALLOWED_ORIGINS.split(','),
+ // credentials: true   // Habilita o envio de cookies para o front-end
+}))
 
 
 app.use(logger('dev'))
@@ -17,7 +24,6 @@ app.use(cookieParser())
 
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
 
 
 /**************** ROTAS *******************/
@@ -33,5 +39,8 @@ app.use('/customers', customersRoute)
 
 import carsRoute from './routes/cars.js'
 app.use('/cars', carsRoute)
+
+import usersRoute from './routes/users.js'
+app.use('/cars', usersRoute)
 
 export default app
