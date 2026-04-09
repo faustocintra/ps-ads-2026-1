@@ -57,3 +57,15 @@ model User {
 }
 
 
+model Seller {
+ id               Int            @id @default(autoincrement())
+ fullname         String         // Nome completo
+ birth_date       DateTime?      // Data de nascimento opcional
+ identity_document String        @unique // CPF Unico
+ email            String         @unique // Email unico
+ phone            String         //Celular
+ is_manager       Boolean        @default(false)
+}
+
+
+
