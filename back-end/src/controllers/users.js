@@ -1,5 +1,6 @@
 import { prisma } from '../database/client.js'
 import argon2 from 'argon2';
+import jwt from 'jsonwebtoken'
 
 
 const ARGON2_CONFIG = {
@@ -154,33 +155,63 @@ controller.delete = async function (req, res){
 }
 
 controller.login = async function(req, res) {
- try {
-   // Busca o usuário no BD por meio dos campos
-   // "username" ou "email"
-   const user = await prisma.user.findUnique({
-     where: {
-       OR: [
-         { username: req.body?.username },
-         { email: req.body?.email }
-       ]
-     }
-   })
+
+    try {
+    // Busca o usuário no BD por meio dos campos
+    // "username" ou "email"
+    const user = await prisma.user.findFirst({
+        where: {
+            OR: [
+                { username: req.body?.username },
+                { email: req.body?.email }
+            ]
+        }
+    })
 
 
-   // Se o usuário não for encontrado, retorna
-   // HTTP 401: Unauthorized
-   if(! user) {
-     console.error(`ERRO DE LOGIN: usuário "${req.body?.username}" ou e-mail "${req.body?.email}" não encontrado`)
-     return res.send(401).end()
-   }
+    // Se o usuário não for encontrado, retorna
+    // HTTP 401: Unauthorized
+    if(! user) {
+        console.error(`ERRO DE LOGIN: usuário "${req.body?.username}" ou e-mail "${req.body?.email}" não encontrado`)
+        return res.status(401).end()
+    }
+    // Usuário encontrado, vamos conferir se senha informada é a correta
+    const match = await argon2.verify(user.password, req.body?.password)
+
+    // Se a senha estiver errada, retorna
+    // HTTP 401: Unauthorized
+    if(! match){
+        console.error('ERRO DE LOGIN: senha inválida')
+        return res.status(401).end()
+    }
+
+    // SE CHEGAMOS ATÉ AQUI, AS CREDENCIAIS ESTÃO CORRETAS E
+    // O USUÁRIO DEVE SER AUTENTICADO
+
+    // Deleta o campo "password" do objeto "user" antes de usá-lo
+    // no token e no valor de retorno
+    if(user.password) delete user.password
 
 
- }
- catch(error) {
-   console.error(error)
-   // HTTP 500: Internal Server Error
-   res.status(500).end()
- }
+    // Usuário/email e senha OK, passamos ao procedimento de gerar o token
+    const token = jwt.sign(
+        user,                       // Dados do usuário
+        process.env.TOKEN_SECRET,   // Senha para criptografar o token
+        { expiresIn: '24h' }        // Prazo de validade do token
+    )
+
+
+    // Retorna os dados do usuário e o token com
+    // HTTP 200: OK (implícito)
+    res.send({user, token})
+
+
+    }
+    catch(error) {
+        console.error(error)
+        // HTTP 500: Internal Server Error
+        res.status(500).end()
+    }
 }
 
 
