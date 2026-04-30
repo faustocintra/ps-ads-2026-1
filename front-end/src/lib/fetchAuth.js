@@ -28,8 +28,6 @@ function buildOptions(method = 'GET', body = null) {
   // e o inclui nos headers, se for o caso
   const token = window.localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN_NAME)
 
-  // console.log({token})
-
   if(token) options.headers.authorization = `Bearer ${token}`
 
   return options
