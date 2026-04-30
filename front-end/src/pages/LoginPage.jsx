@@ -11,15 +11,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useNavigate } from 'react-router-dom'
 import { feedbackNotify, feedbackWait } from '../ui/Feedback'
 
-
 import fetchAuth from '../lib/fetchAuth'
 
-
-// import AuthContext from '../contexts/AuthContext'
-
+import AuthContext from '../contexts/AuthContext'
 
 export default function LoginPage() {
-
 
  const [state, setState] = React.useState({
    email: '',
@@ -32,12 +28,9 @@ export default function LoginPage() {
    showPassword
  } = state
 
-
- // const { authState, setAuthState } = React.useContext(AuthContext)
-
+ const { authState, setAuthState } = React.useContext(AuthContext)
 
  const navigate = useNavigate()
-
 
  function handleChange(event) {
    // Atualiza a variável de estado associada ao input que foi modificado
@@ -78,7 +71,7 @@ export default function LoginPage() {
 
 
      // Guarda no contexto as informações sobre o usuário autenticado
-     // setAuthState({ ...authState, authUser: result.user })
+     setAuthState({ ...authState, authUser: result.user })
 
 
      feedbackNotify(
