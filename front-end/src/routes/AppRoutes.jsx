@@ -5,6 +5,9 @@ import Homepage from '../pages/Homepage'
 import CarsList from '../pages/cars/CarsList'
 import CustomersList from '../pages/customers/CustomersList'
 
+import UsersList from '../pages/users/UsersList'
+import UsersForm from '../pages/users/UsersForm'
+
 import LoginPage from '../pages/LoginPage'
 
 export default function AppRoutes() {
@@ -15,6 +18,10 @@ export default function AppRoutes() {
 
    <Route path="/cars" element={ <CarsList /> } />
    <Route path="/customers" element={ <CustomersList /> } />
+
+   <Route path="/users" element={ <UsersList /> } />
+   <Route path="/users/new" element={ <UsersForm /> } />
+   <Route path="/users/:id" element={ <UsersForm /> } />
 
  </Routes>
 }
