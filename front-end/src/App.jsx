@@ -1,4 +1,5 @@
 // import './App.css'
+import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 
@@ -18,8 +19,18 @@ import FooterBar from './ui/FooterBar'
 
 import AppRoutes from './routes/AppRoutes'
 
+import AuthContext from './contexts/AuthContext'
+
 
 function App() {
+  const [authState, setAuthState] = React.useState({
+   authUser: null,
+   redirectTo: null
+ })
+  const {
+   authUser,
+   redirectTo
+ } = authState
  return (
    <>
      <ThemeProvider theme={theme}>
@@ -27,6 +38,7 @@ function App() {
        <CssBaseline />
       
        <BrowserRouter>
+        <AuthContext.Provider value = {{ authState, setAuthState}}>
          <HeaderBar />
 
 
@@ -37,6 +49,7 @@ function App() {
 
 
          <FooterBar />
+         </AuthContext.Provider>
        </BrowserRouter>
     
      </ThemeProvider>
