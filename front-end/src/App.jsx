@@ -47,7 +47,7 @@ function App() {
              </AuthContext.Provider> poderá acessar os dados compartilhados
              por AuthProvider por meio do 'value'
          */}
-         <AuthContext.Provider value={{ authState, setAuthState }} ></AuthContext.Provider>
+         <AuthContext.Provider value={{ authState, setAuthState }} >
 
          <HeaderBar />
 
