@@ -32,7 +32,7 @@ export default function Homepage() {
        Bem-vindo(a) à loja Karangos!
      </Typography>
     
-     <Typography variant="h5">
+     {/* <Typography variant="h5">
        Exposição de valores do <em>local storage</em>
        <TableContainer component={Paper}>
          <Table>
@@ -59,7 +59,7 @@ export default function Homepage() {
        <Typography variant="caption" style={{ fontFamily: 'monospace '}}>
          <p>{ document.cookie }</p> 
        </Typography>
-     </Typography>
+     </Typography> */}
     
    </>
  )

@@ -1,3 +1,6 @@
+/*
+ Por padrão, oculta os botões de editar e excluir dos datagrids
+*/
 .MuiDataGrid-row button {
  visibility: hidden;
 }
