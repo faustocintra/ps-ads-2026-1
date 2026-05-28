@@ -5,7 +5,7 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 
 
 export default function FooterBar() {
- return <>
+  return <>
     <Box
       component="footer"
       sx={{
@@ -17,16 +17,16 @@ export default function FooterBar() {
         width: '100vw'
       }}
     >
-      <Typography 
+      <Typography
         variant="caption"
-          sx={{
+        sx={{
           '& a': {  // Altera a cor do link (a) dentro do Typography (&)
             color: 'secondary.light'
           }
         }}
       >
-        Desenvolvido e mantido com <CoffeeIcon fontSize="small" /> por <a href="mailto:professor@faustocintra.com.br">Prof. Fausto Cintra</a>
+        Desenvolvido e mantido com <CoffeeIcon fontSize="small" /> por <a href="mailto:jalisson.ribeiro7@gmail.com">Jalisson Junior</a>
       </Typography>
     </Box>
- </>
+  </>
 }
