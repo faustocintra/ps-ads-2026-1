@@ -231,6 +231,15 @@ controller.logout = async function (req, res){
     res.status(204).end()
 }
 
+controller.me = function (req, res) {
+    /*
+      Retorna o usuário autenticado (caso haja) que foi armazenado na
+      variável req.authUser pelo middleware de autorização logo após
+      o token ter sido decodificado
+    */
+    return res.send(req?.authUser)
+}
+
 
 
 
